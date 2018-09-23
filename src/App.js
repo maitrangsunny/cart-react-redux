@@ -5,6 +5,8 @@ import ProductContainer from './containers/ProductContainer';
 import Message from './components/Message';
 import Cart from './components/Cart';
 import CartContainer from './containers/CartContainer';
+import MessageContainer from './containers/MessageContainer';
+
 class App extends Component {
   render() {
     return (
@@ -13,7 +15,7 @@ class App extends Component {
 			<main id="mainContainer">
 				<div className="container">
 					<ProductContainer/>
-					<Message/>
+					<MessageContainer/>
 					<CartContainer/>
 				</div>
 			</main>

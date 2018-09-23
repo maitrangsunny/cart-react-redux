@@ -1,8 +1,22 @@
 import React, { Component } from 'react';
-
-class CartItem extends Component {
+import * as Message from '../constants/Message';
+class CartItem extends Component {    
     showSubTotal = (price,quantity) => {
         return price*quantity;
+    }
+    removeItem = (product) => {
+        this.props.onRemoveItem(product);
+        this.props.onChangeMessage(Message.MSG_DELETE_PRODUCT_IN_CART_SUCCESS);
+    }
+    onUpdateQuantity = (product, quantity) => {
+        if(quantity > 0) {
+            this.setState({
+                currentQuantity: quantity
+            })
+            this.props.onUpdateQuantity(product,quantity);
+             this.props.onChangeMessage(Message.MSG_UPDATE_TO_CART_SUCCESS);
+        }
+
     }
   render() {
       var {item} = this.props;
@@ -22,11 +36,11 @@ class CartItem extends Component {
                 <span className="qty">{item.quantity} </span>
                 <div className="btn-group radio-group" data-toggle="buttons">
                     <label className="btn btn-sm btn-primary
-                        btn-rounded waves-effect waves-light">
+                        btn-rounded waves-effect waves-light" onClick = {() => this.onUpdateQuantity(item.product,item.quantity-1)}>
                         <a>—</a>
                     </label>
                     <label className="btn btn-sm btn-primary
-                        btn-rounded waves-effect waves-light">
+                        btn-rounded waves-effect waves-light"  onClick = {() => this.onUpdateQuantity(item.product,item.quantity+1)}>
                         <a>+</a>
                     </label>
                 </div>
@@ -34,7 +48,7 @@ class CartItem extends Component {
             <td>{ this.showSubTotal(item.product.price, item.quantity)}$</td>
             <td>
                 <button type="button" className="btn btn-sm btn-primary waves-effect waves-light" data-toggle="tooltip" data-placement="top"
-                    title="" data-original-title="Remove item">
+                    title="" data-original-title="Remove item" onClick = {() => this.removeItem(item.product)}>
                     X
                 </button>
             </td>
